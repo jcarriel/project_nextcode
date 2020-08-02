@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% include('navbar.html.twig') %}
+<div class="main container">
+{% for message in app.flashes('exito') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+    <h1>Clientes</h1>
+      <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>CI/RUC</th>
+                <th>RAZON SOCIAL</th>
+                <th>TELEFONO</th>
+                <th>DIRECCION</th>
+                <th>ESTADO</th>
+                <th>ACCION</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cliente in clientes %}
+            <tr data-id={{ cliente.id }}>
+                <td>{{ cliente.id }}</td>
+                <td>{{ cliente.ciRuc }}</td>
+                <td>{{ cliente.razonSocial }}</td>
+                <td>{{ cliente.telefono }}</td>
+                <td>{{ cliente.direccion }}</td>
+                <td>{{ cliente.estado }}</td>
+                <td class="actions" WIDTH="220px">
+                    <a href="{{ path('clientes_show', {'id': cliente.id}) }}" class="btn btn-sm btn-info">VER</a>
+                    <a href="{{ path('clientes_edit', {'id': cliente.id}) }}"  class="btn btn-sm btn-primary">EDITAR</a>
+                    <a class="btn btn-sm btn-danger text-white" style="text-color: white" data-playgroup-id="{{ cliente.id }}">BORRAR</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('clientes_new') }}" class="btn btn-success">NUEVO</a>
+</div>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+    <script src="{{ asset('js/delete-cliente.js') }}"></script>
+{% endblock %}
