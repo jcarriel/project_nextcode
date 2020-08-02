@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductosRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,11 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Productos
 {
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\FacturaDetalle", mappedBy="productos")
-     */
-    private $factura_detalle;
 
     /**
      * @ORM\Id()
@@ -42,6 +39,16 @@ class Productos
      * @ORM\Column(type="integer")
      */
     private $stock;
+
+    /**
+     * @ORM\OneToMany(targetEntity=FacturaDetalle::class, mappedBy="productos")
+     */
+    private $productos;
+
+    public function __construct()
+    {
+        $this->productos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -92,6 +99,37 @@ class Productos
     public function setStock(int $stock): self
     {
         $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FacturaDetalle[]
+     */
+    public function getProductos(): Collection
+    {
+        return $this->productos;
+    }
+
+    public function addProducto(FacturaDetalle $producto): self
+    {
+        if (!$this->productos->contains($producto)) {
+            $this->productos[] = $producto;
+            $producto->setProductos($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProducto(FacturaDetalle $producto): self
+    {
+        if ($this->productos->contains($producto)) {
+            $this->productos->removeElement($producto);
+            // set the owning side to null (unless already changed)
+            if ($producto->getProductos() === $this) {
+                $producto->setProductos(null);
+            }
+        }
 
         return $this;
     }

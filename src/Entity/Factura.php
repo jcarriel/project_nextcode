@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FacturaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,21 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Factura
 {
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Empresa", inversedBy="factura")
-     */
-    private $empresa;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Clientes", inversedBy="factura")
-     */
-    private $clientes;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\FacturaDetalle", mappedBy="factura")
-     */
-    private $factura_detalle;
 
     /**
      * @ORM\Id()
@@ -52,6 +39,28 @@ class Factura
      * @ORM\Column(type="datetime")
      */
     private $fecha;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Empresa::class, inversedBy="facturas")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $empresa;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Clientes::class, inversedBy="facturas")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $clientes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=FacturaDetalle::class, mappedBy="factura")
+     */
+    private $facturas;
+
+    public function __construct()
+    {
+        $this->facturas = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,4 +114,60 @@ class Factura
 
         return $this;
     }
+
+    public function getEmpresa(): ?Empresa
+    {
+        return $this->empresa;
+    }
+
+    public function setEmpresa(?Empresa $empresa): self
+    {
+        $this->empresa = $empresa;
+
+        return $this;
+    }
+
+    public function getClientes(): ?Clientes
+    {
+        return $this->clientes;
+    }
+
+    public function setClientes(?Clientes $clientes): self
+    {
+        $this->clientes = $clientes;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FacturaDetalle[]
+     */
+    public function getFacturas(): Collection
+    {
+        return $this->facturas;
+    }
+
+    public function addFactura(FacturaDetalle $factura): self
+    {
+        if (!$this->facturas->contains($factura)) {
+            $this->facturas[] = $factura;
+            $factura->setFactura($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFactura(FacturaDetalle $factura): self
+    {
+        if ($this->facturas->contains($factura)) {
+            $this->facturas->removeElement($factura);
+            // set the owning side to null (unless already changed)
+            if ($factura->getFactura() === $this) {
+                $factura->setFactura(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

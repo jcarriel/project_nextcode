@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EmpresaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -39,9 +41,14 @@ class Empresa
     private $direccion;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Factura", mappedBy="empresa")
+     * @ORM\OneToMany(targetEntity=Factura::class, mappedBy="empresa")
      */
-    private $factura;
+    private $facturas;
+
+    public function __construct()
+    {
+        $this->facturas = new ArrayCollection();
+    }
     
     public function getId(): ?int
     {
@@ -82,5 +89,40 @@ class Empresa
         $this->direccion = $direccion;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Factura[]
+     */
+    public function getFacturas(): Collection
+    {
+        return $this->facturas;
+    }
+
+    public function addFactura(Factura $factura): self
+    {
+        if (!$this->facturas->contains($factura)) {
+            $this->facturas[] = $factura;
+            $factura->setEmpresa($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFactura(Factura $factura): self
+    {
+        if ($this->facturas->contains($factura)) {
+            $this->facturas->removeElement($factura);
+            // set the owning side to null (unless already changed)
+            if ($factura->getEmpresa() === $this) {
+                $factura->setEmpresa(null);
+            }
+        }
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getRuc();
     }
 }

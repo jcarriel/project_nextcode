@@ -12,17 +12,6 @@ class FacturaDetalle
 {
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Factura", inversedBy="factura_detalle")
-     */
-    private $factura;
-
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Productos", inversedBy="factura_detalle")
-     */
-    private $productos;
-
-    /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -38,6 +27,18 @@ class FacturaDetalle
      * @ORM\Column(type="float")
      */
     private $total;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Productos::class, inversedBy="productos")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $productos;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Factura::class, inversedBy="facturas")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $factura;
 
     public function getId(): ?int
     {
@@ -64,6 +65,30 @@ class FacturaDetalle
     public function setTotal(float $total): self
     {
         $this->total = $total;
+
+        return $this;
+    }
+
+    public function getProductos(): ?Productos
+    {
+        return $this->productos;
+    }
+
+    public function setProductos(?Productos $productos): self
+    {
+        $this->productos = $productos;
+
+        return $this;
+    }
+
+    public function getFactura(): ?Factura
+    {
+        return $this->factura;
+    }
+
+    public function setFactura(?Factura $factura): self
+    {
+        $this->factura = $factura;
 
         return $this;
     }

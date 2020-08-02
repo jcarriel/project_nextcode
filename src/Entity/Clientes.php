@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClientesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -13,11 +15,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Clientes
 {
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Factura", mappedBy="clientes")
-     */
-    private $factura;
 
     /**
      * @ORM\Id()
@@ -54,6 +51,16 @@ class Clientes
      * @ORM\Column(type="string", length=255)
      */
     private $estado;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Factura::class, mappedBy="clientes")
+     */
+    private $facturas;
+
+    public function __construct()
+    {
+        $this->facturas = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -117,5 +124,41 @@ class Clientes
         $this->direccion = $direccion;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Factura[]
+     */
+    public function getFacturas(): Collection
+    {
+        return $this->facturas;
+    }
+
+    public function addFactura(Factura $factura): self
+    {
+        if (!$this->facturas->contains($factura)) {
+            $this->facturas[] = $factura;
+            $factura->setClientes($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFactura(Factura $factura): self
+    {
+        if ($this->facturas->contains($factura)) {
+            $this->facturas->removeElement($factura);
+            // set the owning side to null (unless already changed)
+            if ($factura->getClientes() === $this) {
+                $factura->setClientes(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getCiRuc();
     }
 }
