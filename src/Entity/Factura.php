@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\FacturaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,28 +28,34 @@ class Factura
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $punto_emision;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\NotBlank
      */
     private $sec_factura;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank
      */
     private $fecha;
 
     /**
      * @ORM\ManyToOne(targetEntity=Empresa::class, inversedBy="facturas")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank
      */
     private $empresa;
 
     /**
      * @ORM\ManyToOne(targetEntity=Clientes::class, inversedBy="facturas")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank
      */
     private $clientes;
 
@@ -56,6 +63,18 @@ class Factura
      * @ORM\OneToMany(targetEntity=FacturaDetalle::class, mappedBy="factura")
      */
     private $facturas;
+
+    /**
+     * @ORM\Column(type="float")
+     * @Assert\NotBlank
+     */
+    private $impuestos;
+
+    /**
+     * @ORM\Column(type="float")
+     * @Assert\NotBlank
+     */
+    private $total;
 
     public function __construct()
     {
@@ -147,27 +166,26 @@ class Factura
         return $this->facturas;
     }
 
-    public function addFactura(FacturaDetalle $factura): self
+    public function getImpuestos(): ?float
     {
-        if (!$this->facturas->contains($factura)) {
-            $this->facturas[] = $factura;
-            $factura->setFactura($this);
-        }
+        return $this->impuestos;
+    }
+
+    public function setImpuestos(float $impuestos): self
+    {
+        $this->impuestos = $impuestos;
 
         return $this;
     }
 
-    public function removeFactura(FacturaDetalle $factura): self
+    public function getTotal(): ?float
     {
-        if ($this->facturas->contains($factura)) {
-            $this->facturas->removeElement($factura);
-            // set the owning side to null (unless already changed)
-            if ($factura->getFactura() === $this) {
-                $factura->setFactura(null);
-            }
-        }
-
-        return $this;
+        return $this->total;
     }
 
+    public function setTotal(float $total): self
+    {
+        $this->total = $total;
+        return $this;
+    }
 }

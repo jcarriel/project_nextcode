@@ -159,6 +159,6 @@ class Clientes
 
     public function __toString()
     {
-        return $this->getCiRuc();
+        return $this->getRazonSocial();
     }
 }

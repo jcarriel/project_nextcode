@@ -1,4 +1,49 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="main container">
+    <div class="row well">
+    <div class="col-md-6">
+        {{ form_start(form,{'attr': {'novalidate':'novalidate','role' :'form'}}) }}
+        <div class="form-group">
+            {{ form_label(form.establecimiento) }}
+            {{ form_widget(form.establecimiento,{'attr': {'class':'form-control','placeholder' :'ESTABLECIMIENTO'}}) }} 
+            <span class="text-danger">{{form_errors(form.establecimiento)}}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.punto_emision) }}
+            {{ form_widget(form.punto_emision,{'attr': {'class':'form-control','placeholder' :'PUNTO EMISION'}}) }} 
+            <span class="text-danger">{{form_errors(form.punto_emision)}}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.sec_factura) }}
+            {{ form_widget(form.sec_factura,{'attr': {'class':'form-control','placeholder' :'SEC. FACTURA'}}) }} 
+            <span class="text-danger">{{form_errors(form.sec_factura)}}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.fecha) }}
+            {{ form_widget(form.fecha,{'attr': {'class':'form-control'}}) }} 
+            <span class="text-danger">{{form_errors(form.fecha)}}</span>
+        </div>
+         <div class="form-group">
+            {{ form_label(form.impuestos) }}
+            {{ form_widget(form.impuestos,{'attr': {'class':'form-control','placeholder' :'IMPUESTOS'}}) }} 
+            <span class="text-danger">{{form_errors(form.impuestos)}}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.total) }}
+            {{ form_widget(form.total,{'attr': {'class':'form-control','placeholder' :'TOTAL'}}) }} 
+            <span class="text-danger">{{form_errors(form.total)}}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.empresa) }}
+            {{ form_widget(form.empresa,{'attr': {'class':'form-control','placeholder' :'EMPRESA'}}) }} 
+            <span class="text-danger">{{form_errors(form.empresa)}}</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.clientes) }}
+            {{ form_widget(form.clientes,{'attr': {'class':'form-control','placeholder' :'CLIENTES'}}) }} 
+            <span class="text-danger">{{form_errors(form.clientes)}}</span>
+        </div>
+        <button class="btn btn-success">{{ button_label|default('GUARDAR') }}</button>
+        {{ form_end(form) }}
+    </div>
+    </div>
+</div>

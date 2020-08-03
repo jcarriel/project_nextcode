@@ -123,6 +123,6 @@ class Empresa
 
     public function __toString()
     {
-        return $this->getRuc();
+        return $this->getRazonSocial();
     }
 }

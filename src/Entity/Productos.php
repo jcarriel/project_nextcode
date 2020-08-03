@@ -40,11 +40,6 @@ class Productos
      */
     private $stock;
 
-    /**
-     * @ORM\OneToMany(targetEntity=FacturaDetalle::class, mappedBy="productos")
-     */
-    private $productos;
-
     public function __construct()
     {
         $this->productos = new ArrayCollection();
@@ -104,33 +99,16 @@ class Productos
     }
 
     /**
-     * @return Collection|FacturaDetalle[]
+     * @return Collection|Factura[]
      */
     public function getProductos(): Collection
     {
         return $this->productos;
     }
 
-    public function addProducto(FacturaDetalle $producto): self
+
+    public function __toString()
     {
-        if (!$this->productos->contains($producto)) {
-            $this->productos[] = $producto;
-            $producto->setProductos($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProducto(FacturaDetalle $producto): self
-    {
-        if ($this->productos->contains($producto)) {
-            $this->productos->removeElement($producto);
-            // set the owning side to null (unless already changed)
-            if ($producto->getProductos() === $this) {
-                $producto->setProductos(null);
-            }
-        }
-
-        return $this;
+        return $this->getDescripcion();
     }
 }

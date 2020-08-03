@@ -41,11 +41,10 @@ class ProductosController extends AbstractController
 
             return $this->redirectToRoute('productos_index');
         }
-
         return $this->render('productos/new.html.twig', [
             'producto' => $producto,
-            'form' => $form->createView(),
         ]);
+
     }
 
     /**

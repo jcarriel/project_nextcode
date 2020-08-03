@@ -19,6 +19,17 @@ class ProductosRepository extends ServiceEntityRepository
         parent::__construct($registry, Productos::class);
     }
 
+    public function listarProductos()
+    {
+        return $this->getEntityManager()
+            ->createQuery('
+                select productos.descripcion, productos.precio, productos.stock 
+                FROM App\Entity\Productos productos
+            ')
+            ->getSingleResult();
+    }
+
+
     // /**
     //  * @return Productos[] Returns an array of Productos objects
     //  */

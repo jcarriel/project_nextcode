@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Factura;
+use App\Entity\Productos;
 use App\Form\FacturaType;
 use App\Repository\FacturaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,9 +42,11 @@ class FacturaController extends AbstractController
 
             return $this->redirectToRoute('factura_index');
         }
-
+        $em = $this->getDoctrine()->getManager();
+        $productos = $em->getRepository(Productos::class)->listarProductos();
         return $this->render('factura/new.html.twig', [
             'factura' => $factura,
+            'productos'=> $productos,
             'form' => $form->createView(),
         ]);
     }
@@ -91,4 +94,5 @@ class FacturaController extends AbstractController
 
         return $this->redirectToRoute('factura_index');
     }
+
 }

@@ -16,6 +16,8 @@ class FacturaType extends AbstractType
             ->add('punto_emision')
             ->add('sec_factura')
             ->add('fecha')
+            ->add('impuestos')
+            ->add('total')
             ->add('empresa')
             ->add('clientes')
         ;

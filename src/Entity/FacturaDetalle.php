@@ -29,12 +29,6 @@ class FacturaDetalle
     private $total;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Productos::class, inversedBy="productos")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $productos;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Factura::class, inversedBy="facturas")
      * @ORM\JoinColumn(nullable=false)
      */
