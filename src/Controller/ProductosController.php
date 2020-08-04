@@ -43,6 +43,7 @@ class ProductosController extends AbstractController
         }
         return $this->render('productos/new.html.twig', [
             'producto' => $producto,
+            'form' => $form->createView(),
         ]);
 
     }

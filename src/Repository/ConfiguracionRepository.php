@@ -19,6 +19,16 @@ class ConfiguracionRepository extends ServiceEntityRepository
         parent::__construct($registry, Configuracion::class);
     }
 
+    public function obtenerConfig()
+    {
+        return $this->getEntityManager()
+            ->createQuery('
+                select config.establecimiento, config.punto_emision, (config.sec_factura)+1 as sec_factura
+                FROM App\Entity\Configuracion config where config.id=(select MAX(configu.id) as ultimo FROM App\Entity\Configuracion configu)
+            ')
+            ->getSingleResult();
+    }
+
     // /**
     //  * @return Configuracion[] Returns an array of Configuracion objects
     //  */

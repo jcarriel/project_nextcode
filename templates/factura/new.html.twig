@@ -2,38 +2,65 @@
 
 {% block body %}
 {% include('navbar.html.twig') %}
- <div class="container">
-    <div class="row">
-    <div class="col-sm">
-    <h5>NUEVA FACTURA</h5>
+    <!-- Modal -->
+	<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h4 class="modal-title" id="myModalLabel">Buscar productos</h4>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  </div>
+		  <div class="modal-body">
+			<form class="form-horizontal">
+			</form>
+			<div id="loader" style="position: absolute;	text-align: center;	top: 55px;	width: 100%;display:none;"></div><!-- Carga gif animado -->
+			<div class="outer_div" >
+				<table id="tablaproductos" class="table table-striped table-bordered" width="70">
+					<thead class="thead-dark">
+						<tr>
+							<th>ID</th>
+							<th>DESCRIPCION</th>
+							<th>PRECIO</th>
+							<th>STOCK</th>
+							<th>CANTIDAD</th>
+							<th width="50">AGREGAR</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for producto in productos %}
+						<tr>
+							<td>{{ producto.id }}</td>
+							<td>{{ producto.descripcion }}</td>
+							<td><input type="number" id="precio_venta" class="form-control" value="{{ producto.precio }}"></td>
+							<td>{{ producto.stock }}</td>
+							<td><input type="number" id="cantidad" class="form-control" required></td>
+							<td>
+								<button type="button" class="btn btn-success" onclick="agregar({{ producto.id }})" data-dismiss="modal">+</button>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="8">no records found</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>	
+			</div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>			
+		  </div>
+		</div>
+	  </div>
+	</div>
 
-    {{ include('factura/_form.html.twig') }}
+	{{ include('factura/_form.html.twig')}}
 
-    {# {{ dump(productos) }} #}
+    {# {{ include('factura/_form.html.twig',{'establecimiento: {{configuracion.establecimiento}}}) }} #}
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+	 {% block javascript %}
+	 {{ parent() }}
+            <script src="{{ asset('js/productos.js') }}"></script>
+        {% endblock %}
 
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-        ...
-        </div>
-    </div>
-    </div>
-
-    <!-- Small modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Small modal</button>
-
-    <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-        ...
-        </div>
-    </div>
-    </div>
-
-    <a href="{{ path('factura_index') }}" style=" margin-left: 15px; margin-top: 5px;" class="btn btn-sm btn-info">REGRESAR A LA LISTA</a>
-    </div>
-    </div>
-</div>
 {% endblock %}

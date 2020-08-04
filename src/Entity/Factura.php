@@ -35,12 +35,11 @@ class Factura
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
-     * @Assert\NotBlank
      */
     private $sec_factura;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      * @Assert\NotBlank
      */
     private $fecha;
@@ -122,12 +121,12 @@ class Factura
         return $this;
     }
 
-    public function getFecha(): ?\DateTimeInterface
+    public function getFecha(): ?\DateTime
     {
         return $this->fecha;
     }
 
-    public function setFecha(\DateTimeInterface $fecha): self
+    public function setFecha(\DateTime $fecha): self
     {
         $this->fecha = $fecha;
 
@@ -188,4 +187,6 @@ class Factura
         $this->total = $total;
         return $this;
     }
+
+    
 }

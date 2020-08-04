@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Factura;
 use App\Entity\Productos;
+use App\Entity\Configuracion;
 use App\Form\FacturaType;
 use App\Repository\FacturaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,10 +44,12 @@ class FacturaController extends AbstractController
             return $this->redirectToRoute('factura_index');
         }
         $em = $this->getDoctrine()->getManager();
+        $configuracion = $em->getRepository(Configuracion::class)->obtenerConfig();
         $productos = $em->getRepository(Productos::class)->listarProductos();
         return $this->render('factura/new.html.twig', [
             'factura' => $factura,
             'productos'=> $productos,
+            'configuracion' => $configuracion,
             'form' => $form->createView(),
         ]);
     }
@@ -93,6 +96,17 @@ class FacturaController extends AbstractController
         }
 
         return $this->redirectToRoute('factura_index');
+    }
+
+    public function obtenerPorId($id){
+        $em = $this->getDoctrine()->getManager();
+        $productos = $em->getRepository(Productos::class)->agregarProducto($id);
+        echo json_encode($productos);
+        // echo $productos['id'];
+        // echo $productos['descripcion'];
+        // echo $productos['precio'];
+        // echo $productos['stock'];
+        die();
     }
 
 }

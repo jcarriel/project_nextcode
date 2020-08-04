@@ -3,6 +3,6 @@
 #    controller: App\Controller\DefaultController::index
 
 index:
-  path: /query
-  controller: App\Controller\FacturaController::index_a
+  path: /query/{id}
+  controller: App\Controller\FacturaController::obtenerPorId
 

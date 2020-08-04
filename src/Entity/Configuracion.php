@@ -33,7 +33,7 @@ class Configuracion
 
     /**
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
     private $sec_factura;
 
@@ -66,12 +66,12 @@ class Configuracion
         return $this;
     }
 
-    public function getSecFactura(): ?string
+    public function getSecFactura(): ?int
     {
         return $this->sec_factura;
     }
 
-    public function setSecFactura(string $sec_factura): self
+    public function setSecFactura(int $sec_factura): self
     {
         $this->sec_factura = $sec_factura;
 

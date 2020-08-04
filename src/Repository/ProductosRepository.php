@@ -23,10 +23,19 @@ class ProductosRepository extends ServiceEntityRepository
     {
         return $this->getEntityManager()
             ->createQuery('
-                select productos.descripcion, productos.precio, productos.stock 
+                select productos.id, productos.descripcion, productos.precio, productos.stock 
                 FROM App\Entity\Productos productos
             ')
-            ->getSingleResult();
+            ->getResult();
+    }
+
+    public function agregarProducto($id)
+    {
+        return $this->getEntityManager()
+            ->createQuery('
+                select productos.id, productos.descripcion, productos.precio
+                FROM App\Entity\Productos productos where productos.id = :id')
+            ->setParameter('id', $id)->getSingleResult();
     }
 
 
