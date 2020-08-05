@@ -28,13 +28,11 @@ class Factura
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
      */
     private $punto_emision;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
      */
     private $sec_factura;
 
@@ -78,6 +76,7 @@ class Factura
     public function __construct()
     {
         $this->facturas = new ArrayCollection();
+        $this->fecha = new \DateTime();
     }
 
     public function getId(): ?int

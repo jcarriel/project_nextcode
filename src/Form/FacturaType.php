@@ -6,13 +6,14 @@ use App\Entity\Factura;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class FacturaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('establecimiento')
+            ->add('establecimiento') 
             ->add('punto_emision')
             ->add('sec_factura')
             ->add('fecha')

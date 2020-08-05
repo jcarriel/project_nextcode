@@ -1,16 +1,25 @@
-function agregar(id,stock) {
-    var precio_venta = $('#precio_venta').val();
-    var cantidad = $('#cantidad').val();
-
-    if (cantidad>stock) {
-        alert('vales arta');
-        return false;
+function stock(stockP,campo) {
+    // alert(stockP);
+    // alert(campo);
+    var cantidad = $(campo).val();
+    if (cantidad>stockP) {
+        alert("Solo existen "+stockP+" en stock");
+        $(campo).val(stockP);
+    } else if (cantidad==0){
+        alert("Debe elegir al menos 1 producto");
+        $(campo).val(1);
     }
+}
+
+function agregar(id, campo) {
+    let precio_venta = $('#precio_venta').val();
+    let cantidad = $(campo).val();
+    alert(cantidad + '   ' + precio_venta);
 
     //Inicia validacion
     if (isNaN(cantidad)) {
         alert('Esto no es un numero');
-        document.getElementById('cantidad').focus();
+        document.getElementById(campo).focus();
         return false;
     }
     if (isNaN(precio_venta)) {

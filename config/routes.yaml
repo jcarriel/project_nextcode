@@ -1,8 +1,8 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-
 index:
+   path: /
+   controller: App\Controller\HomeController::index
+
+index2:
   path: /query/{id}
   controller: App\Controller\FacturaController::obtenerPorId
 
