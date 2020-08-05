@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %} 
 {% block body %} 
 {% include('navbar.html.twig') %}
-<div class="container">
+<div class="container col-md">
   {% for message in app.flashes('exito') %}
   <div class="alert alert-success">
     {{ message }}
@@ -44,16 +44,15 @@
           <td class="actions">
             <a
               href="{{ path('clientes_show', {'id': cliente.id}) }}"
-              class="edit"
-              ><i class="material-icons" data-toggle="tooltip" title="Edit"
-                >&#xE254;</i
+              ><i class="material-icons" data-toggle="tooltip" title="ver"
+                >visibility</i
               ></a
             >
             <a
               href="{{ path('clientes_edit', {'id': cliente.id}) }}"
-              class="delete"
-              ><i class="material-icons" data-toggle="tooltip" title="Delete"
-                >&#xE872;</i
+              class="edit"
+              ><i class="material-icons" data-toggle="tooltip" title="editar"
+                >&#xE254;</i
               ></a
             >
           </td>

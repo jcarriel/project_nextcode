@@ -37,8 +37,8 @@
                 <td>{{ configuracion.puntoEmision }}</td>
                 <td>{{ configuracion.secFactura }}</td>
                 <td>
-                    <a href="{{ path('configuracion_show', {'id': configuracion.id}) }}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                    <a href="{{ path('configuracion_edit', {'id': configuracion.id}) }}" class="delete"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> 
+                    <a href="{{ path('configuracion_show', {'id': configuracion.id}) }}"><i class="material-icons" data-toggle="tooltip" title="Ver">visibility</i></a>
+                    <a href="{{ path('configuracion_edit', {'id': configuracion.id}) }}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a> 
                 </td>
             </tr>
         {% else %}

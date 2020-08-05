@@ -2,29 +2,28 @@
 
 {% block body %}
 <style>
-    .error{color: red}
+  .error{color: red}
+  .col-center{
+    float: none;
+    margin: 0 auto;
+}
 </style>
-<br><br><br><br>
-<div class="container h-100">
-  <div class="row justify-content-center h-100">
-      <div class="col-sm-8 align-self-center text-center">
-          <div class="card shadow">
-              <div class="card-body">
-                <h1>Login</h1>
-                {% if error %}
-                <span class="error">{{ error.messageKey }}</span>
-                {% endif %}
-                <form action="{{ path('login')}}" method="POST">
-                  <input type="text" name="_username" class="form-control" placeholder="Username"><br>
-                  <input type="password" name="_password" class="form-control" placeholder="Password"><br>
-                  <button type="submit" class="btn btn-success btn-sm">Ingresar</button>
-                </form> 
-              </div>
-            </div>
+<div class="container text-center">
+    <div class="col-md-6 well col-md-offset-3 ">
+      {% if error %}
+      <span class="error">{{ error.messageKey }}</span>
+      {% endif %}
+      <form action="{{ path('login')}}" method="POST">
+          <div class="form-group">
+            <label for="_username">Username</label>
+            <input type="text" name="_username" class="form-control" placeholder="Username"><br>
           </div>
-        </div>
-      </div>
+          <div class="form-group">
+            <label for="_password">Password</label>
+             <input type="password" name="_password" class="form-control" placeholder="Password"><br>
+          </div>
+          <button type="submit" class="btn btn-success btn-sm">Ingresar</button>
+        </form> 
     </div>
-  </div>  
 </div>
 {% endblock %}
