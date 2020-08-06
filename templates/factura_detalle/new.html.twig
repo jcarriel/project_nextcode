@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ include('factura_detalle/_form.html.twig') }}
+
+    <a href="{{ path('factura_detalle_index') }}">back to list</a>
+{% endblock %}

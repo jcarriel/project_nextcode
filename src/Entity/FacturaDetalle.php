@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FacturaDetalleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class FacturaDetalle
 {
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -19,9 +20,19 @@ class FacturaDetalle
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="date")
      */
-    private $cantidad;
+    private $fecha;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $subtotal;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $iva;
 
     /**
      * @ORM\Column(type="float")
@@ -29,24 +40,53 @@ class FacturaDetalle
     private $total;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Factura::class, inversedBy="facturas")
+     * @ORM\ManyToOne(targetEntity=Factura::class, inversedBy="factura_detalle")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $factura;
+    private $facturas;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $productos;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCantidad(): ?int
+    public function getFecha(): ?\DateTimeInterface
     {
-        return $this->cantidad;
+        return $this->fecha;
     }
 
-    public function setCantidad(int $cantidad): self
+    public function setFecha(\DateTimeInterface $fecha): self
     {
-        $this->cantidad = $cantidad;
+        $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    public function getSubtotal(): ?float
+    {
+        return $this->subtotal;
+    }
+
+    public function setSubtotal(float $subtotal): self
+    {
+        $this->subtotal = $subtotal;
+
+        return $this;
+    }
+
+    public function getIva(): ?float
+    {
+        return $this->iva;
+    }
+
+    public function setIva(float $iva): self
+    {
+        $this->iva = $iva;
 
         return $this;
     }
@@ -63,27 +103,28 @@ class FacturaDetalle
         return $this;
     }
 
-    public function getProductos(): ?Productos
+    public function getFacturas(): ?Factura
+    {
+        return $this->facturas;
+    }
+
+    public function setFacturas(?Factura $facturas): self
+    {
+        $this->facturas = $facturas;
+
+        return $this;
+    }
+
+    public function getProductos(): ?string
     {
         return $this->productos;
     }
 
-    public function setProductos(?Productos $productos): self
+    public function setProductos(string $productos): self
     {
         $this->productos = $productos;
 
         return $this;
     }
 
-    public function getFactura(): ?Factura
-    {
-        return $this->factura;
-    }
-
-    public function setFactura(?Factura $factura): self
-    {
-        $this->factura = $factura;
-
-        return $this;
-    }
 }

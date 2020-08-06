@@ -1,6 +1,5 @@
 <div class="main container">
     <div class="row well">
-		<a href="{{ path('factura_index') }}" class="btn btn-sm btn-info float-right">REGRESAR A LA LISTA</a><br><br>
 			{{ form_start(form,{'attr': {'novalidate':'novalidate','role' :'form'}}) }}
 				<br>
 				<div class="form-group row col-md-12">
@@ -36,15 +35,15 @@
                         {{ form_widget(form.clientes,{'attr': {'class':'form-control','placeholder' :'CLIENTES'}}) }} 
                         <span class="text-danger">{{form_errors(form.clientes)}}</span>
                     </div>
-					<div class="col-md-6" style="left: 50px;top: 20px;">
+					<div class="col-md-6" style="left: 30px;top: 20px;">
 						<button type="button" class="btn btn-success" onclick="location.href='{{path('productos_new')}}'">
-						Nuevo producto
+						<span class="glyphicon glyphicon-th"></span> Nuevo producto
 						</button>
 						<button type="button" class="btn btn-info" onclick="location.href='{{path('clientes_new')}}'">
-						Nuevo cliente
+						<span class="glyphicon glyphicon-user"></span> Nuevo cliente
 						</button>
 						<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">
-						 <span class="glyphicon glyphicon-search"></span> Agregar productos
+						 <span class="glyphicon glyphicon-plus"></span> Agregar productos
 						</button>
 					</div>	
 				</div>	
@@ -64,20 +63,27 @@
 						</tbody>
 					</table>
 				</div>
+				<div class="form-group row col-md-12">
+				<div class="col-md-3">
+						<label class="col-md-2 control-label">SUBTOTAL</label>
+                        {{ form_widget(form.subtotal,{'attr': {'class':'form-control','value' :'0','readonly':'readonly'}}) }} 
+                        <span class="text-danger">{{form_errors(form.subtotal)}}</span>
+                    </div>
+				</div>
                 <div class="form-group row col-md-12">
-                    <div class="col-md-3">
+					<div class="col-md-3">
 						<label class="col-md-2 control-label">IMPUESTOS</label>
-                        {{ form_widget(form.impuestos,{'attr': {'class':'form-control','placeholder' :'IMPUESTOS'}}) }} 
+                        {{ form_widget(form.impuestos,{'attr': {'class':'form-control','value' :'0','readonly':'readonly'}}) }} 
                         <span class="text-danger">{{form_errors(form.impuestos)}}</span>
                     </div>
 				</div>
 				<div class="form-group row col-md-12">
                     <div class="col-md-3">
 					    <label class="col-md-2 control-label">TOTAL</label>
-                        {{ form_widget(form.total,{'attr': {'class':'form-control','placeholder' :'TOTAL'}}) }} 
+                        {{ form_widget(form.total,{'attr': {'class':'form-control','value' :'0','readonly':'readonly'}}) }} 
                         <span class="text-danger">{{form_errors(form.total)}}</span>
                     </div>
-					<div class="col-md-8" style="left: 635px">
+					<div class="col-md-8" style="top: 20px;left: 635px">
 						<button class="col-md-2 btn btn-success">{{ button_label|default('GUARDAR') }}</button><br><br>
 						{{ form_end(form) }}<br>
 					</div>

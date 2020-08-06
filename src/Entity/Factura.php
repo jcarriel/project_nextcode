@@ -57,11 +57,6 @@ class Factura
     private $clientes;
 
     /**
-     * @ORM\OneToMany(targetEntity=FacturaDetalle::class, mappedBy="factura")
-     */
-    private $facturas;
-
-    /**
      * @ORM\Column(type="float")
      * @Assert\NotBlank
      */
@@ -73,10 +68,20 @@ class Factura
      */
     private $total;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $subtotal;
+
+    /**
+     * @ORM\OneToMany(targetEntity=FacturaDetalle::class, mappedBy="facturas")
+     */
+    private $factura_detalle;
+
     public function __construct()
     {
-        $this->facturas = new ArrayCollection();
         $this->fecha = new \DateTime();
+        $this->factura_detalle = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,14 +161,6 @@ class Factura
         return $this;
     }
 
-    /**
-     * @return Collection|FacturaDetalle[]
-     */
-    public function getFacturas(): Collection
-    {
-        return $this->facturas;
-    }
-
     public function getImpuestos(): ?float
     {
         return $this->impuestos;
@@ -187,5 +184,51 @@ class Factura
         return $this;
     }
 
-    
+    public function getSubtotal(): ?float
+    {
+        return $this->subtotal;
+    }
+
+    public function setSubtotal(float $subtotal): self
+    {
+        $this->subtotal = $subtotal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FacturaDetalle[]
+     */
+    public function getFacturaDetalle(): Collection
+    {
+        return $this->factura_detalle;
+    }
+
+    public function addFacturaDetalle(FacturaDetalle $facturaDetalle): self
+    {
+        if (!$this->factura_detalle->contains($facturaDetalle)) {
+            $this->factura_detalle[] = $facturaDetalle;
+            $facturaDetalle->setFacturas($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFacturaDetalle(FacturaDetalle $facturaDetalle): self
+    {
+        if ($this->factura_detalle->contains($facturaDetalle)) {
+            $this->factura_detalle->removeElement($facturaDetalle);
+            // set the owning side to null (unless already changed)
+            if ($facturaDetalle->getFacturas() === $this) {
+                $facturaDetalle->setFacturas(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getSecFactura();
+    }
 }

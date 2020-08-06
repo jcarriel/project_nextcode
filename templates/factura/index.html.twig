@@ -25,24 +25,26 @@
                 <th>PUNTO EMISION</th>
                 <th>SEC. FACTURA</th>
                 <th>FECHA</th>
+                <th>SUBTOTAL</th>
                 <th>IMPUESTOS</th>
                 <th>TOTAL</th>
                 <th>ACCION</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="text-center">
         {% for factura in facturas %}
             <tr>
                 <td>{{ factura.id }}</td>
                 <td>{{ factura.establecimiento }}</td>
                 <td>{{ factura.puntoEmision }}</td>
                 <td>{{ factura.secFactura }}</td>
-                <td>{{ factura.fecha ? factura.fecha|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ factura.fecha ? factura.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ factura.subtotal }}</td>
                 <td>{{ factura.impuestos }}</td>
                 <td>{{ factura.total }}</td>
                 <td>
                     <a href="{{ path('factura_show', {'id': factura.id}) }}"><i class="material-icons" data-toggle="tooltip" title="Ver">visibility</i></a>
-                    <a href="{{ path('factura_edit', {'id': factura.id}) }}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a> 
+                    {# <a href="{{ path('factura_edit', {'id': factura.id}) }}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>  #}
                 </td>
             </tr>
         {% else %}
@@ -52,5 +54,6 @@
         {% endfor %}
         </tbody>
     </table>
+  </div>    
 </div>
 {% endblock %}

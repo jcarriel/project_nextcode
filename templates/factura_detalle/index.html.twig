@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% include('navbar.html.twig') %}
+    <div class="container">
+      <div class="table-wrapper">
+        <div class="table-title">
+          <div class="row">
+            <div class="col-sm-6">
+              <h2><b>Detalles</b></h2>
+            </div>
+            <div class="col-sm-6">
+            </div>
+          </div>
+        </div>
+        <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>FECHA</th>
+                <th>PRODUCTOS</th>
+                <th>SUBTOTAL</th>
+                <th>IVA</th>
+                <th>TOTAL</th>
+                <th>ACCION</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for factura_detalle in factura_detalles %}
+                <tr>
+                    <td>{{ factura_detalle.id }}</td>
+                    <td>{{ factura_detalle.fecha ? factura_detalle.fecha|date('Y-m-d') : '' }}</td>
+                    <td>{{ factura_detalle.productos }}</td>
+                    <td>{{ factura_detalle.subtotal }}</td>
+                    <td>{{ factura_detalle.iva }}</td>
+                    <td>{{ factura_detalle.total }}</td>
+                    <td>
+                        <a href="{{ path('factura_detalle_show', {'id': factura_detalle.id}) }}"><i class="material-icons" data-toggle="tooltip" title="Ver">visibility</i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    </div>    
+</div>
+{% endblock %}

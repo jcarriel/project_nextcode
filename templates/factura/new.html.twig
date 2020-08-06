@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %} {% block body %} {% include('navbar.html.twig')
 %}
 <div class="container">
-  <div class="row">
-      <h1>Nueva Factura</h1>
-      {{ include('factura/_form.html.twig')}}
-  </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <h2><b>Nueva Factura</b></h2>
+        </div>
+        <div class="col-sm-6">
+          <a href="{{ path('factura_index') }}" class="btn btn-sm btn-info float-right" style="margin-left: 412px;margin-top: 20px">REGRESAR A LA LISTA</a>
+        </div>
+      </div>
 </div>
+
+ {{ include('factura/_form.html.twig') }}
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -36,7 +42,7 @@
 										<td>{{ producto.stock }}</td>
 										<td><input type="number" id="{{ producto.descripcion }}" class="form-control" min=0 oninput="validity.valid||(value='1');" onkeyup="stock({{ producto.stock }},{{ producto.descripcion }})" onkeypress="stock({{ producto.stock }},{{ producto.descripcion }})" onclick="stock({{ producto.stock }},{{ producto.descripcion }})" value="1" required></td>
 										<td>
-											<button type="button" class="btn btn-success" onclick="agregar({{ producto.id }},{{ producto.descripcion }})" data-dismiss="modal">+</button>
+											<button id="agregarProductos" type="button" class="btn btn-success" onclick="agregar({{ producto.id }},{{ producto.descripcion }})" data-dismiss="modal">+</button>
 										</td>
 									</tr>
 								{% else %}

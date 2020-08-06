@@ -40,11 +40,6 @@ class Productos
      */
     private $stock;
 
-    public function __construct()
-    {
-        $this->productos = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -97,15 +92,6 @@ class Productos
 
         return $this;
     }
-
-    /**
-     * @return Collection|Factura[]
-     */
-    public function getProductos(): Collection
-    {
-        return $this->productos;
-    }
-
 
     public function __toString()
     {
