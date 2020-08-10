@@ -3,16 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\FacturaDetalle;
-use App\Form\FacturaDetalleType;
 use App\Repository\FacturaDetalleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/facturadetalle")
  */
+
 class FacturaDetalleController extends AbstractController
 {
     /**
@@ -25,25 +24,11 @@ class FacturaDetalleController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="factura_detalle_new", methods={"GET","POST"})
-     */
-    public function new()
+    public function guardarDetalle($productos)
     {
-        
-    }
-
-    /**
-     * @Route("/{id}", name="factura_detalle_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, FacturaDetalle $facturaDetalle): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$facturaDetalle->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($facturaDetalle);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('factura_detalle_index');
+        $em = $this->getDoctrine()->getManager();
+        $resultProducto = $em->getRepository(FacturaDetalle::class)->guardarDetalle($productos);
+        echo var_dump($resultProducto);
+        die();
     }
 }

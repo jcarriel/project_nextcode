@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\FacturaDetalle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method FacturaDetalle|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +19,14 @@ class FacturaDetalleRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, FacturaDetalle::class);
+    }
+
+    public function guardarDetalle($productos)
+    {
+        return $this->getEntityManager()
+            ->createQuery('
+                update  App\Entity\FacturaDetalle d set d.productos=:productos where d.id = (select MAX(de.id) FROM App\Entity\FacturaDetalle de)')
+            ->setParameter('productos', $productos)->getSingleResult();
     }
 
     // /**

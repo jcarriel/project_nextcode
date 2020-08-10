@@ -22,7 +22,15 @@ index_empresa:
    path: /empresa
    controller: App\Controller\EmpresaController::index
 
+# index_detalle:
+#    path: /facturadetalle
+#    controller: App\Controller\FacturaDetalleController::index
+
 index2:
   path: /query/{id}
   controller: App\Controller\FacturaController::obtenerPorId
+
+indexDetalle:
+  path: /detallenew/{productos}
+  controller: App\Controller\FacturaDetalleController::guardarDetalle
 

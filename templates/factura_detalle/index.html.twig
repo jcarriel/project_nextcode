@@ -35,7 +35,8 @@
                     <td>{{ factura_detalle.iva }}</td>
                     <td>{{ factura_detalle.total }}</td>
                     <td>
-                        <a href="{{ path('factura_detalle_show', {'id': factura_detalle.id}) }}"><i class="material-icons" data-toggle="tooltip" title="Ver">visibility</i></a>
+                        <button class="btn btn-xs" onclick=""><i class="material-icons" data-toggle="tooltip" title="imprimir">picture_as_pdf</i></button>
+                        {# <a href="{{factura_detalle.id }}"><i class="material-icons" data-toggle="tooltip" title="imprimir">picture_as_pdf</i></a> #}
                     </td>
                 </tr>
             {% else %}
@@ -49,3 +50,7 @@
     </div>    
 </div>
 {% endblock %}
+{% block javascript %}
+<script src="{{ asset('js/jquery.tabletojson.min.js') }}"></script>
+{% endblock %} {% endblock %}
+

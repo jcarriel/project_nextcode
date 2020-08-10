@@ -84,13 +84,15 @@
                         <span class="text-danger">{{form_errors(form.total)}}</span>
                     </div>
 					<div class="col-md-8" style="top: 20px;left: 635px">
-						<button class="col-md-2 btn btn-success">{{ button_label|default('GUARDAR') }}</button><br><br>
+						<button class="col-md-2 btn btn-success" id="guardaFactura" onclick="setTimeout('updateProducto()',2000);">{{ button_label|default('GUARDAR') }}</button><br><br>
 						{{ form_end(form) }}<br>
 					</div>
                 </div>
         </div>
     </div>
 </div>
+{# <button class="col-md-2 btn btn-success" id="probar">probar</button> #}
+<object id="pdf" data="" type="application/pdf" width="100%" height="100%"></object>
 
 <script>
 function load() {
