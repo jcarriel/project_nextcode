@@ -23,10 +23,14 @@ class ConfiguracionRepository extends ServiceEntityRepository
     {
         return $this->getEntityManager()
             ->createQuery('
-                select config.establecimiento, config.punto_emision, (config.sec_factura)+1 as sec_factura
-                FROM App\Entity\Configuracion config where config.id=(select MAX(configu.id) as ultimo FROM App\Entity\Configuracion configu)
+            select c.establecimiento, c.punto_emision, (c.sec_factura + f.id)+1 as sec_factura 
+            FROM App\Entity\Configuracion c,App\Entity\Factura f where c.id=(select MAX(conf.id) 
+            FROM App\Entity\Configuracion conf) and f.id=(select MAX(fac.id) FROM App\Entity\Factura fac)
             ')
             ->getSingleResult();
+            // select c.establecimiento, c.punto_emision, (c.sec_factura + f.id)+1 as sec_factura 
+            // FROM App\Entity\Configuracion c,App\Entity\Factura f where c.id=(select MAX(conf.id) 
+            // FROM App\Entity\Configuracion conf) and f.id=(select MAX(fac.id) FROM App\Entity\Factura fac)
     }
 
     // /**
