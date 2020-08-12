@@ -1,13 +1,23 @@
 <?php
 
-$id = $_POST['id'];
-$fecha = $_POST['fecha'];
-$productos = json_decode($_POST["listaProductos"], true);
+$fecha=$_POST['fecha'];
+$establecimiento = $_POST['establecimiento'];
+$punto_emision = $_POST['punto_emision'];
+$sec_factura = $_POST['sec_factura'];
+$cliente = $_POST['cliente'];
+$empresa = $_POST['empresa'];
 $subtotal = $_POST['subtotal'];
 $impuestos = $_POST['iva'];
 $total = $_POST['total'];
 $productos = json_decode($_POST["listaProductos"], true);
 
+// $establecimiento = 'A';
+// $punto_emision = 'A';
+// $empresa ='A';
+// $cliente = 'A';
+// $subtotal = 'A';
+// $impuestos = 'A';
+// $total = 'A';
 
 // foreach ($productos as $key => $value) {
 //   echo $value['ID'];
@@ -33,8 +43,11 @@ $pdf->SetFont('helvetica', '', 12, '', true);
 $pdf->AddPage();
 $html = <<<EOD
 <p style="text-align: center;"><span style="font-size: 18pt;"><strong>Detalle Factura</strong></span></p>
-<p style="text-align: center;"><span style="font-size: 13pt;"><strong>Codigo Detalle: $id</strong></span></p>
+<p style="text-align: center;"><span style="font-size: 18pt;"><strong>$establecimiento</strong></span></p>
 <p style="text-align: right;"> Fecha: $fecha</p>
+<p style="text-align: left;"> Punto Emision: $punto_emision</p>
+<p style="text-align: left;"> Cliente: $cliente</p>
+<p style="text-align: left;"> Empresa: $empresa</p>
 <p></p>
 EOD;
 $pdf->writeHTML($html, false, false, false, false, '');

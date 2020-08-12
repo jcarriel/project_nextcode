@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Factura;
 use App\Entity\FacturaDetalle;
 use App\Repository\FacturaDetalleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,8 +21,27 @@ class FacturaDetalleController extends AbstractController
     public function index(FacturaDetalleRepository $facturaDetalleRepository): Response
     {
         return $this->render('factura_detalle/index.html.twig', [
-            'factura_detalles' => $facturaDetalleRepository->findAll(),
+            'factura_detalles' => $facturaDetalleRepository->listarTodos(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}", name="factura_detalle_show", methods={"GET"})
+     */
+    public function show(Factura $factura): Response
+    {
+        return $this->render('factura_detalle/show.html.twig', [
+            'factura' => $factura,
+        ]);
+    }
+
+
+    public function listando()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $products = $em->getRepository(FacturaDetalle::class)->listarTodos();
+        var_dump($products);
+        die();
     }
 
     public function guardarDetalle($productos)

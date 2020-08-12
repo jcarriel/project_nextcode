@@ -3,6 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\FacturaDetalle;
+use App\Entity\Factura;
+use App\Entity\Productos;
+use App\Entity\Clientes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,6 +30,17 @@ class FacturaDetalleRepository extends ServiceEntityRepository
             ->createQuery('
                 update  App\Entity\FacturaDetalle d set d.productos=:productos where d.id = (select MAX(de.id) FROM App\Entity\FacturaDetalle de)')
             ->setParameter('productos', $productos)->getSingleResult();
+    }
+
+    public function listarTodos()
+    {
+        return $this->getEntityManager()
+            ->createQuery('
+                select fd.id,f.id as id_factura, f.fecha,f.establecimiento,f.punto_emision,f.sec_factura,c.razon_social as cliente,e.razon_social as empresa,fd.productos,
+                fd.subtotal,fd.iva,fd.total from App\Entity\FacturaDetalle fd,App\Entity\Factura f,App\Entity\Empresa e, App\Entity\Clientes c 
+                where fd.facturas=f.id and f.clientes=c.id and f.empresa=e.id'
+                )
+            ->getResult();
     }
 
     // /**

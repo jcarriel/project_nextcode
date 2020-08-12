@@ -74,7 +74,7 @@ class Factura
     private $subtotal;
 
     /**
-     * @ORM\OneToMany(targetEntity=FacturaDetalle::class, mappedBy="facturas")
+     * @ORM\OneToMany(targetEntity=FacturaDetalle::class, mappedBy="facturas",cascade={"remove"})
      */
     private $factura_detalle;
 
